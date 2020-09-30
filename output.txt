@@ -1,0 +1,27 @@
+CONST FS = REQUIRE("FS")
+CONST READLINE = REQUIRE("READLINE").CREATEINTERFACE({
+    INPUT: PROCESS.STDIN,
+    OUTPUT: PROCESS.STDOUT
+});
+READLINE.QUESTION('FILE NAME: ', (FILE) =>{
+    FS.READFILE(FILE,(ERROR,BUFFER) => {
+        IF (ERROR){
+            CONSOLE.LOG(ERROR.MESSAGE)
+            READLINE.CLOSE()
+            RETURN
+        }  
+         
+    READLINE.QUESTION('OUTPUT FILE: ', (FILE2) =>{
+        READLINE.CLOSE()
+        CONST CONTENT = BUFFER.TOSTRING()
+        CONST UPPER = CONTENT.TOUPPERCASE()
+        FS.WRITEFILE(FILE2,UPPER,(ERROR) => {
+            IF (ERROR){
+                CONSOLE.LOG(ERROR.MESSAGE)
+                RETURN
+            }  
+
+            CONSOLE.LOG(`WROTE TO FILE ${FILE2}`)
+        })
+    })
+})})
